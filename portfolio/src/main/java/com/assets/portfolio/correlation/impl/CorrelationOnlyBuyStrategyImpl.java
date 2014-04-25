@@ -10,10 +10,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.assets.portfolio.correlation.CorrelationStrategy;
-import com.assets.portfolio.correlation.entities.InvestmentAction;
-import com.assets.portfolio.correlation.entities.InvestmentActionEnum;
-import com.assets.portfolio.correlation.entities.StockList;
-import com.assets.portfolio.correlation.entities.StockPrice;
+import com.assets.portfolio.correlation.entities.investment.InvestmentAction;
+import com.assets.portfolio.correlation.entities.investment.InvestmentActionEnum;
+import com.assets.portfolio.correlation.entities.stock.StockList;
+import com.assets.portfolio.correlation.entities.stock.StockPrice;
 import com.assets.portfolio.correlation.exceptions.StockNotFoundException;
 
 public class CorrelationOnlyBuyStrategyImpl implements CorrelationStrategy {

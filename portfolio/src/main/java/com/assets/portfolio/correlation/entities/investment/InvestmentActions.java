@@ -1,4 +1,4 @@
-package com.assets.portfolio.correlation.entities;
+package com.assets.portfolio.correlation.entities.investment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

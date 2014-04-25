@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.assets.portfolio.correlation.entities.CorrelationIntervalInputData;
 import com.assets.portfolio.correlation.entities.CorrelationTwoStocks;
-import com.assets.portfolio.correlation.entities.InvestmentResult;
 import com.assets.portfolio.correlation.entities.StockCorrelation;
+import com.assets.portfolio.correlation.entities.investment.InvestmentResult;
 
 public interface CorrelationService {
 

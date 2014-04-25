@@ -1,9 +1,11 @@
-package com.assets.portfolio.correlation.entities;
+package com.assets.portfolio.correlation.entities.investment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.List;
+
+import com.assets.portfolio.correlation.entities.CorrelationIntervalInputData;
 
 public class InvestmentResult {
 

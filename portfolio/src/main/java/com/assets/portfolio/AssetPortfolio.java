@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.assets.portfolio.correlation.entities.StockList;
+import com.assets.portfolio.correlation.entities.stock.StockList;
 import com.assets.portfolio.data.loader.DataLoader;
 import com.assets.portfolio.data.loader.impl.DataLoaderCsv;
 

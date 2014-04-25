@@ -15,11 +15,11 @@ import com.assets.portfolio.correlation.CorrelationService;
 import com.assets.portfolio.correlation.CorrelationStrategy;
 import com.assets.portfolio.correlation.entities.CorrelationIntervalInputData;
 import com.assets.portfolio.correlation.entities.CorrelationTwoStocks;
-import com.assets.portfolio.correlation.entities.InvestmentAction;
-import com.assets.portfolio.correlation.entities.InvestmentActions;
-import com.assets.portfolio.correlation.entities.InvestmentResult;
 import com.assets.portfolio.correlation.entities.StatisticList;
 import com.assets.portfolio.correlation.entities.StockCorrelation;
+import com.assets.portfolio.correlation.entities.investment.InvestmentAction;
+import com.assets.portfolio.correlation.entities.investment.InvestmentActions;
+import com.assets.portfolio.correlation.entities.investment.InvestmentResult;
 
 public class CorrelationServiceImpl implements CorrelationService {
     

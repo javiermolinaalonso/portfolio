@@ -1,7 +1,9 @@
-package com.assets.portfolio.correlation.entities;
+package com.assets.portfolio.correlation.entities.investment;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+
+import com.assets.portfolio.correlation.entities.stock.StockPrice;
 
 public class InvestmentAction {
 

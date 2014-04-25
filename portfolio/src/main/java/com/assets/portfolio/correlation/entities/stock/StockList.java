@@ -1,4 +1,4 @@
-package com.assets.portfolio.correlation.entities;
+package com.assets.portfolio.correlation.entities.stock;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.assets.portfolio.correlation.entities.StatisticList;
 import com.assets.portfolio.correlation.exceptions.StockListMeanParameterException;
 
 public class StockList extends LinkedList<StockPrice> {

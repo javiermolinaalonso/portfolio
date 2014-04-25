@@ -16,8 +16,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.assets.portfolio.correlation.entities.StockList;
-import com.assets.portfolio.correlation.entities.StockPrice;
+import com.assets.portfolio.correlation.entities.stock.StockList;
+import com.assets.portfolio.correlation.entities.stock.StockPrice;
 import com.assets.portfolio.data.exceptions.DataLoaderEmptyFileException;
 import com.assets.portfolio.data.exceptions.DataLoaderFileNotFoundException;
 import com.assets.portfolio.data.exceptions.DataLoaderIOException;

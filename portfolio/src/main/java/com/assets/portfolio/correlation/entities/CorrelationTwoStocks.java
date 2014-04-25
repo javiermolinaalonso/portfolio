@@ -3,6 +3,7 @@ package com.assets.portfolio.correlation.entities;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import com.assets.portfolio.correlation.entities.stock.StockList;
 import com.assets.portfolio.correlation.exceptions.EmptyStatisticListException;
 import com.assets.portfolio.correlation.exceptions.InvalidCorrelationDatesException;
 
