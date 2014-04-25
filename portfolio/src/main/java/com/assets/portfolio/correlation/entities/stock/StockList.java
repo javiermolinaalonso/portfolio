@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.assets.portfolio.correlation.entities.StatisticList;
+import com.assets.portfolio.correlation.entities.statistic.LambdaStatisticList;
 import com.assets.portfolio.correlation.exceptions.StockListMeanParameterException;
 
 public class StockList extends LinkedList<StockPrice> {
@@ -51,7 +51,7 @@ public class StockList extends LinkedList<StockPrice> {
         }
         StockList list = new StockList(getTicker());
         for(int i = 0; i <= size() - sessions; i++){
-            StatisticList stList = new StatisticList(stream().skip(i).limit(sessions).map(x -> x.getValue()).collect(Collectors.toList()));
+            LambdaStatisticList stList = new LambdaStatisticList(stream().skip(i).limit(sessions).map(x -> x.getValue()).collect(Collectors.toList()));
             BigDecimal mean = stList.getMean();
             list.add(new StockPrice(getTicker(), get(i + sessions - 1).getInstant(), mean));
         }

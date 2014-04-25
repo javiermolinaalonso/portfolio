@@ -1,27 +1,31 @@
 package com.assets.portfolio.correlation.entities;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
+
+import com.assets.portfolio.correlation.entities.enums.StatisticListType;
+import com.assets.portfolio.correlation.entities.statistic.LambdaMultithreadStatisticList;
+import com.assets.portfolio.correlation.entities.statistic.LambdaStatisticList;
+import com.assets.portfolio.correlation.entities.statistic.SimpleMultithreadStatisticList;
+import com.assets.portfolio.correlation.entities.statistic.SimpleStatisticList;
 
 public class FactoryStatisticList {
 
-    public static StatisticList getReversedList(List<BigDecimal> origin) {
-        StatisticList list = new StatisticList(origin);
-        Collections.reverse(list);
-        return list;
-    }
-    public static StatisticList getRandomList(String maximum, Integer size) {
-        StatisticList list = new StatisticList();
-        for(int i = 0; i < size; i++){
-            list.add(generateRandomNumber(maximum));
+    public static StatisticList<BigDecimal> getStatisticList(List<BigDecimal> list, StatisticListType type) {
+        switch(type){
+        case LAMBDA:
+            return new LambdaStatisticList(list);
+        case LAMBDA_MULTI:
+            return new LambdaMultithreadStatisticList(list);
+        case MULTI:
+            return new SimpleMultithreadStatisticList(list);
+        case SINGLE:
+            return new SimpleStatisticList(list);
+        default:
+            break;
+        
         }
-        return list;
+        return new LambdaStatisticList(list);
     }
 
-    private static BigDecimal generateRandomNumber(String maximum) {
-        BigDecimal max = new BigDecimal(maximum);
-        BigDecimal randFromDouble = new BigDecimal(Math.random());
-        return randFromDouble.divide(max, BigDecimal.ROUND_DOWN);
-    }
 }

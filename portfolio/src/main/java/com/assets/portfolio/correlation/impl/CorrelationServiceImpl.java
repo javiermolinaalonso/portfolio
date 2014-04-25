@@ -15,11 +15,11 @@ import com.assets.portfolio.correlation.CorrelationService;
 import com.assets.portfolio.correlation.CorrelationStrategy;
 import com.assets.portfolio.correlation.entities.CorrelationIntervalInputData;
 import com.assets.portfolio.correlation.entities.CorrelationTwoStocks;
-import com.assets.portfolio.correlation.entities.StatisticList;
 import com.assets.portfolio.correlation.entities.StockCorrelation;
 import com.assets.portfolio.correlation.entities.investment.InvestmentAction;
 import com.assets.portfolio.correlation.entities.investment.InvestmentActions;
 import com.assets.portfolio.correlation.entities.investment.InvestmentResult;
+import com.assets.portfolio.correlation.entities.statistic.LambdaStatisticList;
 
 public class CorrelationServiceImpl implements CorrelationService {
     
@@ -91,7 +91,7 @@ public class CorrelationServiceImpl implements CorrelationService {
 
     private List<Instant> detectAlerts(List<StockCorrelation> list) {
         List<Instant> alerts = new ArrayList<>();
-        StatisticList sList = new StatisticList(list.stream().map(x -> x.getCorrelation()).collect(Collectors.toList()));
+        LambdaStatisticList sList = new LambdaStatisticList(list.stream().map(x -> x.getCorrelation()).collect(Collectors.toList()));
         BigDecimal mean = sList.getMean();
         BigDecimal stdDev = sList.getStdDev();
         BigDecimal limitValue = mean.subtract(stdDev);

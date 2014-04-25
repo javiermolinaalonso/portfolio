@@ -3,6 +3,7 @@ package com.assets.portfolio.correlation.entities;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import com.assets.portfolio.correlation.entities.statistic.LambdaStatisticList;
 import com.assets.portfolio.correlation.entities.stock.StockList;
 import com.assets.portfolio.correlation.exceptions.EmptyStatisticListException;
 import com.assets.portfolio.correlation.exceptions.InvalidCorrelationDatesException;
@@ -42,8 +43,8 @@ public final class CorrelationTwoStocks {
         }
         StockList firstListFiltered = s1.filterStocksAndSort(s2, from, to);
         StockList secondListFiltered = s2.filterStocksAndSort(s1, from, to);
-        StatisticList firstStockValues = new StatisticList(firstListFiltered.stream().map(x -> x.getValue()).collect(Collectors.toList()));
-        StatisticList secondStockValues = new StatisticList(secondListFiltered.stream().map(x -> x.getValue()).collect(Collectors.toList()));
+        LambdaStatisticList firstStockValues = new LambdaStatisticList(firstListFiltered.stream().map(x -> x.getValue()).collect(Collectors.toList()));
+        LambdaStatisticList secondStockValues = new LambdaStatisticList(secondListFiltered.stream().map(x -> x.getValue()).collect(Collectors.toList()));
         return new StockCorrelation(s1.getTicker(), s2.getTicker(), firstStockValues.getCorrelation(secondStockValues), firstListFiltered.getFirst().getInstant(), firstListFiltered.getLast().getInstant(), firstListFiltered.size());
     }
     
