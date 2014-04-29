@@ -2,33 +2,52 @@ package com.assets.portfolio.correlation.entities.investment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+import com.assets.portfolio.correlation.entities.stock.StockList;
 import com.assets.portfolio.correlation.entities.stock.StockPrice;
+import com.assets.trades.service.BuyStrategy;
 
 public class InvestmentActions {
     
-    private Long secondsInvested;
     private BigDecimal benefit;
     private BigDecimal percentBenefit;
     private List<InvestmentAction> actions;
-    private Map<String, List<InvestmentAction>> actionsPerTicker;
     private InvestmentActions actionsPendingToClose;
     private boolean benefitsUpdated;
     private BigDecimal maxAmountInvested;
+    
     public InvestmentActions(){
         this.actions = new ArrayList<InvestmentAction>();
-        this.actionsPerTicker = new HashMap<String, List<InvestmentAction>>();
-        this.secondsInvested = 0l;
         this.benefit = BigDecimal.ZERO;
         this.percentBenefit = BigDecimal.ZERO;
         this.maxAmountInvested = BigDecimal.ZERO;
         this.actionsPendingToClose = null;
         benefitsUpdated = true;
+    }
+    
+    public InvestmentActions(StockList entryPoints, StockList exitPoints, BuyStrategy strategy){
+        this();
+        if(entryPoints != null && !entryPoints.isEmpty()){
+            StockList allActions = new StockList(entryPoints.getTicker());
+            allActions.addAll(entryPoints);
+            allActions.addAll(exitPoints);
+            allActions.sort( (x, y) -> x.getInstant().compareTo(y.getInstant()) );
+            int currentStocksInPossession = 0;
+            for(StockPrice price : allActions){
+                if(entryPoints.contains(price)){
+                    Integer stocksToBuy = strategy.getSharesToBuy(price);
+                    add(new InvestmentAction(price, InvestmentActionEnum.BUY, stocksToBuy));
+                    currentStocksInPossession+=stocksToBuy;
+                }else{
+                    add(new InvestmentAction(price, InvestmentActionEnum.SELL, currentStocksInPossession));
+                    currentStocksInPossession = 0;
+                }
+            }
+        }
     }
     
     public InvestmentActions addAll(List<InvestmentAction> actions2) {
@@ -38,8 +57,6 @@ public class InvestmentActions {
     
     public InvestmentActions add(InvestmentAction action){
         this.actions.add(action);
-        this.actionsPerTicker.putIfAbsent(action.getTicker(), new ArrayList<>());
-        this.actionsPerTicker.get(action.getTicker()).add(action);
         benefitsUpdated = false;
         return this;
     }
@@ -47,10 +64,10 @@ public class InvestmentActions {
     private void updateBenefit(){
         benefit = BigDecimal.ZERO;
         percentBenefit = BigDecimal.ZERO;
-        for(String ticker : actionsPerTicker.keySet()){
-            List<InvestmentAction> actions = actionsPerTicker.get(ticker);
-            computeBenefit(actions);
-        }
+        actionsPendingToClose = new InvestmentActions();
+        
+        computeBenefit(actions);
+        
         benefitsUpdated = true;
     }
 
@@ -59,7 +76,6 @@ public class InvestmentActions {
         BigDecimal roundInvestedAmount = BigDecimal.ZERO;
         BigDecimal lastSellBenefit = BigDecimal.ZERO;
         
-        actionsPendingToClose = new InvestmentActions();
         for(InvestmentAction action : actionsTicker){
             tickerBenefit = tickerBenefit.add(action.getAmountInvested().negate());
             if(InvestmentActionEnum.SELL.equals(action.getAction())){
@@ -73,7 +89,7 @@ public class InvestmentActions {
             }
         }
         
-        percentBenefit = percentBenefit.add(roundInvestedAmount.negate().add(lastSellBenefit).divide(maxAmountInvested, 5, RoundingMode.HALF_DOWN)).multiply(new BigDecimal(100)).setScale(2, RoundingMode.HALF_DOWN);
+        percentBenefit = percentBenefit.add(lastSellBenefit).divide(maxAmountInvested, 5, RoundingMode.HALF_DOWN).multiply(new BigDecimal(100)).setScale(2, RoundingMode.HALF_DOWN);
         benefit = benefit.add(lastSellBenefit);
     }
 
@@ -105,19 +121,21 @@ public class InvestmentActions {
     }
     
     public BigDecimal getPercentBenefitSellingWith(StockPrice stock) {
+        updateDataIfRequired();
        if(actionsPendingToClose == null || actionsPendingToClose.isEmpty()){
            return getPercentBenefit();
        }else{
            add(new InvestmentAction(stock, InvestmentActionEnum.SELL, actionsPendingToClose.getCurrentShares()));
+           updateDataIfRequired();
            return percentBenefit;
        }
     }
     
     public Integer getCurrentShares() {
         if(actionsPendingToClose == null || actionsPendingToClose.isEmpty()){
-            return 0;
+            return getActions().stream().map(x -> x.getSharesAmount()).reduce( (x,  y) -> y = x + y ).get();
         }else{
-            return actionsPendingToClose.getActions().stream().map(x -> x.getSharesAmount()).reduce( (x,  y) -> y = x + y ).get();
+            return actionsPendingToClose.getCurrentShares();
         }
     }
 
@@ -153,5 +171,12 @@ public class InvestmentActions {
         if(!benefitsUpdated){
             updateBenefit();
         }
+    }
+
+    public InvestmentAction getAction(Instant instant) {
+        if(actions.stream().anyMatch( x -> x.getInstant().equals(instant))){
+            return actions.stream().filter(x -> x.getInstant().equals(instant)).iterator().next();
+        }
+        return null;
     }
 }

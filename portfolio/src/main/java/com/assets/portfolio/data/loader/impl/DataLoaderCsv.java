@@ -59,10 +59,19 @@ public class DataLoaderCsv implements DataLoader {
         File directory = new File(dataFile);
         
         if(amount.equals(0)){
-            amount = directory.listFiles().length;
+            if(directory.listFiles() == null){
+                amount = 1;
+            }else{
+                amount = directory.listFiles().length;
+            }
         }
         for(int i = 0; i < amount; i++){
-            File file = directory.listFiles()[i];
+            File file;
+            if(directory.isDirectory()) {
+                file = directory.listFiles()[i];
+            }else{
+                file = directory;
+            }
             String ticker = file.getName().split("_")[1].split("\\.")[0].toUpperCase();
             try {
                 data.put(ticker, loadList(ticker, file.getAbsolutePath()));

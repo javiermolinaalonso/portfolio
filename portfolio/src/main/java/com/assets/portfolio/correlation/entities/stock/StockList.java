@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.assets.portfolio.correlation.entities.FactoryStatisticList;
 import com.assets.portfolio.correlation.entities.statistic.LambdaStatisticList;
 import com.assets.portfolio.correlation.exceptions.StockListMeanParameterException;
 
@@ -45,6 +46,14 @@ public class StockList extends LinkedList<StockPrice> {
                 .collect(Collectors.toList()), getTicker());
     }
     
+    public StockList getMeanWeek(){
+        return getMean(7);
+    }
+    
+    public StockList getMeanMonth(){
+        return getMean(30);
+    }
+    
     public StockList getMean(int sessions){
         if(sessions <= 0){
             throw new StockListMeanParameterException();
@@ -58,11 +67,17 @@ public class StockList extends LinkedList<StockPrice> {
         return list;
     }
     
+    public BigDecimal getStdDevLastSessions(int amountOfSessions, int indexOfLastSession){
+        int from = Math.max(indexOfLastSession - amountOfSessions, 0);
+        List<BigDecimal> values = stream().skip(from).limit(amountOfSessions).map(x -> x.getValue()).collect(Collectors.toList());
+        return FactoryStatisticList.getStatisticList(values).getStdDev();
+    }
+    
     public StockList getFirstDerivate() {
         StockList derivateList = new StockList(getTicker());
-        for(int i = 0; i < size() - 1; i++){
-            BigDecimal firstValue = get(i).getValue();
-            BigDecimal secondValue = get(i+1).getValue();
+        for(int i = 1; i < size(); i++){
+            BigDecimal firstValue = get(i-1).getValue();
+            BigDecimal secondValue = get(i).getValue();
             derivateList.add(new StockPrice(getTicker(), get(i).getInstant(), secondValue.subtract(firstValue)));
         }
         return derivateList;

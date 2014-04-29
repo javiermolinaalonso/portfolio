@@ -11,6 +11,9 @@ import com.assets.portfolio.correlation.entities.statistic.SimpleStatisticList;
 
 public class FactoryStatisticList {
 
+    public static StatisticList<BigDecimal> getStatisticList(List<BigDecimal> list) {
+        return getStatisticList(list, StatisticListType.LAMBDA);
+    }
     public static StatisticList<BigDecimal> getStatisticList(List<BigDecimal> list, StatisticListType type) {
         switch(type){
         case LAMBDA:
