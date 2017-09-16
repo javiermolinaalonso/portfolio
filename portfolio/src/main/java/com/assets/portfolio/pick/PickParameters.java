@@ -5,6 +5,7 @@ import java.util.Optional;
 public class PickParameters {
 
     private final int maxStocks;
+    private final int minStocks;
     private final Double maxCorrelation;
     private final Double maxVolatility;
     private final Double minPerformance;
@@ -12,6 +13,7 @@ public class PickParameters {
 
     private PickParameters (Builder builder) {
         this.maxStocks = builder.maxStocks;
+        this.minStocks = builder.minStocks;
         this.maxCorrelation = builder.maxCorrelation;
         this.maxVolatility = builder.maxVolatility;
         this.minPerformance = builder.minPerformance;
@@ -20,6 +22,10 @@ public class PickParameters {
 
     public int getMaxStocks() {
         return maxStocks;
+    }
+
+    public int getMinStocks() {
+        return minStocks;
     }
 
     public Optional<Double> getMaxCorrelation() {
@@ -40,6 +46,7 @@ public class PickParameters {
 
     public static final class Builder {
         private int maxStocks;
+        private int minStocks;
         private Double maxCorrelation;
         private Double maxVolatility;
         private Double minPerformance;
@@ -50,6 +57,11 @@ public class PickParameters {
 
         public static Builder aPickParameters() {
             return new Builder();
+        }
+
+        public Builder withMinStocks(int minStocks) {
+            this.minStocks = minStocks;
+            return this;
         }
 
         public Builder withMaxStocks(int maxStocks) {

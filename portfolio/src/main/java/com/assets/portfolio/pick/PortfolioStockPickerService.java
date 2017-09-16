@@ -22,10 +22,15 @@ public class PortfolioStockPickerService {
     }
 
     public List<Portfolio> pick(Portfolio portfolio, PickParameters params) {
-        final int maxStocks = params.getMaxStocks();
-        final Set<Set<String>> sets = Sets.powerSet(portfolio.getTickers()).stream().filter(s -> s.size() <= maxStocks).collect(Collectors.toSet());
+        final Set<Set<String>> sets = Sets.powerSet(portfolio.getTickers())
+                .stream()
+                .filter(s -> s.size() <= params.getMaxStocks())
+                .filter(s -> s.size() >= params.getMinStocks())
+                .collect(Collectors.toSet());
 
         List<Portfolio> portfolios = new ArrayList<>();
+        System.out.println(String.format("Analyzing %s portfolios", sets.size()
+        ));
         sets.parallelStream().forEach(set -> {
             final Portfolio subsetPortfolio = portfolioService.buildPortfolio(portfolio, set);
             if(filter(subsetPortfolio, params)) {

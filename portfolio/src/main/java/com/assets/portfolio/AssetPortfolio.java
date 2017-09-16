@@ -9,10 +9,7 @@ import com.assets.statistic.list.StockList;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AssetPortfolio {
 
@@ -46,13 +43,14 @@ public class AssetPortfolio {
 
         final PortfolioStockPickerService stockPickerService = new PortfolioStockPickerService(portfolioService);
         PickParameters params = PickParameters.Builder.aPickParameters()
-                .withMaxStocks(10)
-                .withMaxCorrelation(0.30)
-                .withMaxVolatility(0.20)
+                .withMinStocks(7)
+                .withMaxStocks(12)
+                .withMaxCorrelation(0.28)
+                .withMaxVolatility(0.25)
                 .build();
 
         final List<Portfolio> portfolios = stockPickerService.pick(portfolio, params);
-        portfolios.forEach(Portfolio::print);
+        portfolios.stream().sorted(Comparator.comparing(Portfolio::getGlobalCorrelation)).forEach(Portfolio::print);
     }
 
 }
