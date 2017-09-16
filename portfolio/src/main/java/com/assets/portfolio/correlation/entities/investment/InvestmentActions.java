@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import com.assets.portfolio.correlation.entities.stock.StockList;
-import com.assets.portfolio.correlation.entities.stock.StockPrice;
+import com.assets.entities.StockPrice;
+import com.assets.statistic.list.StockList;
 import com.assets.trades.service.BuyStrategy;
 
 public class InvestmentActions {
@@ -35,7 +36,7 @@ public class InvestmentActions {
             StockList allActions = new StockList(entryPoints.getTicker());
             allActions.addAll(entryPoints);
             allActions.addAll(exitPoints);
-            allActions.sort( (x, y) -> x.getInstant().compareTo(y.getInstant()) );
+            allActions.sort(Comparator.comparing(StockPrice::getInstant));
             int currentStocksInPossession = 0;
             for(StockPrice price : allActions){
                 if(entryPoints.contains(price)){

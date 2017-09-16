@@ -4,9 +4,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import com.assets.entities.StockPrice;
 import com.assets.portfolio.correlation.entities.investment.InvestmentAction;
-import com.assets.portfolio.correlation.entities.stock.StockList;
-import com.assets.portfolio.correlation.entities.stock.StockPrice;
+import com.assets.statistic.list.StockList;
 import com.assets.portfolio.correlation.exceptions.StockNotFoundException;
 
 public interface CorrelationStrategy {

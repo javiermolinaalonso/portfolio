@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.assets.entities.StockPrice;
+import com.assets.statistic.list.StockList;
 import org.apache.log4j.Logger;
 
-import com.assets.portfolio.correlation.entities.stock.StockList;
-import com.assets.portfolio.correlation.entities.stock.StockPrice;
 import com.assets.portfolio.data.exceptions.DataLoaderEmptyFileException;
 import com.assets.portfolio.data.exceptions.DataLoaderFileNotFoundException;
 import com.assets.portfolio.data.exceptions.DataLoaderIOException;
@@ -119,7 +119,7 @@ public class DataLoaderCsv implements DataLoader {
     }
     
     @Override
-    public StockList loadStockList(String ticker) {
+    public StockList loadData(String ticker) {
         return data.get(ticker);
     }
 

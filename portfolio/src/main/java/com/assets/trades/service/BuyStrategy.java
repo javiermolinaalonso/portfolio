@@ -1,9 +1,9 @@
 package com.assets.trades.service;
 
-import com.assets.portfolio.correlation.entities.stock.StockPrice;
+import com.assets.entities.StockPrice;
 
 public interface BuyStrategy {
 
-    public Integer getSharesToBuy(StockPrice price);
+    Integer getSharesToBuy(StockPrice price);
     
 }

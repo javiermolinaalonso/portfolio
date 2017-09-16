@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import com.assets.entities.StockPrice;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.assets.portfolio.correlation.entities.stock.StockPrice;
 import com.assets.trades.service.impl.BuyFixedAmountOfMoney;
 
 public class TestBuyFixedAmountOfMoney {

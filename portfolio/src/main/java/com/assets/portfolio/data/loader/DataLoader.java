@@ -1,8 +1,9 @@
 package com.assets.portfolio.data.loader;
 
+import com.assets.statistic.list.StockList;
+
 import java.util.Map;
 
-import com.assets.portfolio.correlation.entities.stock.StockList;
 
 public interface DataLoader {
 
@@ -10,7 +11,7 @@ public interface DataLoader {
     
     Map<String, StockList> loadData(Integer amount);
     
-    StockList loadStockList(String ticker);
+    StockList loadData(String ticker);
     
     void setDataFile(String dataFile);
 }

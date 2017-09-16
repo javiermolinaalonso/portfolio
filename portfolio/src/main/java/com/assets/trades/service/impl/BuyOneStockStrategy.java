@@ -1,6 +1,6 @@
 package com.assets.trades.service.impl;
 
-import com.assets.portfolio.correlation.entities.stock.StockPrice;
+import com.assets.entities.StockPrice;
 import com.assets.trades.service.BuyStrategy;
 
 public class BuyOneStockStrategy implements BuyStrategy {
