@@ -29,8 +29,7 @@ public class PortfolioStockPickerService {
                 .collect(Collectors.toSet());
 
         List<Portfolio> portfolios = new ArrayList<>();
-        System.out.println(String.format("Analyzing %s portfolios", sets.size()
-        ));
+        System.out.println(String.format("Analyzing %s portfolios", sets.size()));
         sets.parallelStream().forEach(set -> {
             final Portfolio subsetPortfolio = portfolioService.buildPortfolio(portfolio, set);
             if(filter(subsetPortfolio, params)) {

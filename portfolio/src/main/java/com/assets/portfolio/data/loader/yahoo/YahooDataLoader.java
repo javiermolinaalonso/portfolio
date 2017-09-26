@@ -37,10 +37,6 @@ public class YahooDataLoader implements DataLoader {
         this.period = period;
     }
 
-    public YahooDataLoader(String ticker, LocalDateTime from, LocalDateTime to, YahooDataPeriod period) {
-        this(Collections.singletonList(ticker), from, to, period);
-    }
-
     @Override
     public Map<String, StockList> loadData() {
         Map<String, StockList> result = new HashMap<>();
@@ -64,11 +60,6 @@ public class YahooDataLoader implements DataLoader {
 
     private String getMillis(LocalDateTime to) {
         return String.valueOf(to.toEpochSecond(ZoneOffset.UTC));
-    }
-
-    @Override
-    public Map<String, StockList> loadData(Integer integer) {
-        return null;
     }
 
     @Override
