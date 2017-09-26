@@ -18,15 +18,13 @@
 	</repositories>
 
 	<properties>
-		<spring.version>3.2.4.RELEASE</spring.version>
-		<hibernate.version>4.2.2.Final</hibernate.version>
-		<hibernatevalidator.version>5.0.0.Final</hibernatevalidator.version>
+		<spring.version>4.3.11.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.assets</groupId>
 			<artifactId>options</artifactId>
+			<groupId>com.assets</groupId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -34,19 +32,16 @@
 			<artifactId>guava</artifactId>
 			<version>23.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>4.3.11.RELEASE</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
