@@ -12,8 +12,13 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class YahooDataLoader implements DataLoader {
 
@@ -55,7 +60,7 @@ public class YahooDataLoader implements DataLoader {
     }
 
     private String buildUrl(String ticker) {
-        return String.format("%s%s?period2=%s&period1=%s&interval=%s&indicators=quote&includeTimestamps=true&includePrePost=true", BASE_URL, ticker, getMillis(from), getMillis(to), period.getYahoovalue());
+        return String.format("%s%s?period2=%s&period1=%s&interval=%s&indicators=quote&includeTimestamps=true&includePrePost=true", BASE_URL, ticker, getMillis(to), getMillis(from), period.getYahoovalue());
     }
 
     private String getMillis(LocalDateTime to) {

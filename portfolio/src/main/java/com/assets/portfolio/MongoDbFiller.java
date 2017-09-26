@@ -23,8 +23,11 @@ public class MongoDbFiller {
         MongoClient mongo = new MongoClient("localhost", 27017);
         DataLoader defaultLoader = new YahooDataLoader(asList("INTC"), from, to);
         DataLoader loader = new MongoDataLoader(defaultLoader, mongo, "portfolio");
+
+        long time = System.currentTimeMillis();
         final StockList intc = loader.loadData("INTC");
 
-        intc.forEach(System.out::println);
+        time = System.currentTimeMillis() - time;
+        System.out.println(time);
     }
 }

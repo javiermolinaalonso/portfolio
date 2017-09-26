@@ -8,11 +8,13 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import org.bson.Document;
+import org.bson.types.Decimal128;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.Map;
 
 public class MongoDataLoader implements DataLoader {
@@ -47,7 +49,7 @@ public class MongoDataLoader implements DataLoader {
             final StockList stockPrices = defaultLoader.loadData(ticker);
             stockPrices.stream()
                     .map(stockPrice -> new Document("ticker", stockPrice.getTicker())
-                            .append("date", LocalDateTime.ofInstant(stockPrice.getInstant(), ZoneId.systemDefault()).withHour(0).withMinute(0).withSecond(0).withNano(0).toInstant(ZoneOffset.UTC))
+                            .append("date", new Date(LocalDateTime.ofInstant(stockPrice.getInstant(), ZoneId.systemDefault()).withHour(0).withMinute(0).withSecond(0).withNano(0).toInstant(ZoneOffset.UTC).toEpochMilli()))
                             .append("value", stockPrice.getValue()))
                     .forEach(d -> mongo.getDatabase(database).getCollection(DAILY_QUOTES).insertOne(d));
             values = mongo.getDatabase(database).getCollection(DAILY_QUOTES).find(searchQuery);
@@ -61,9 +63,9 @@ public class MongoDataLoader implements DataLoader {
     }
 
     private StockPrice buildStockPrice(Document value) {
-        final LocalDateTime date = (LocalDateTime) value.get("date");
-        final BigDecimal price = (BigDecimal) value.get("value");
-        return new StockPrice((String) value.get("ticker"), date.toInstant(ZoneOffset.UTC), price);
+        final Date date = (Date) value.get("date");
+        final BigDecimal price = ((Decimal128) value.get("value")).bigDecimalValue();
+        return new StockPrice((String) value.get("ticker"), date.toInstant(), price);
     }
 
     @Override
