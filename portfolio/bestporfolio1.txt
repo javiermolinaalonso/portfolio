@@ -1156,6 +1156,8 @@ Portfolio composed by [BAS.DE,KO,INTC,XOM,MRK,PFE,SNY] from 2015-01-01 to 2017-0
 Global correlation: 0.2799
 Global volatility: 19.69%
 Global performance: 8.04%
+
+
 Portfolio composed by [KO,IBM,ALV.DE,XOM,GILD,ABBV,PFE] from 2015-01-01 to 2017-09-15
 Global correlation: 0.2460
 Global volatility: 20.73%

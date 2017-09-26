@@ -48,23 +48,13 @@ public class DataLoaderCsv implements DataLoader {
     
     @Override
     public Map<String, StockList> loadData() {
-        return loadData(0);
-    }
-    
-    @Override
-    public Map<String, StockList> loadData(Integer amount) {
         if(dataFile == null){
             throw new DataLoaderEmptyFileException();
         }
         File directory = new File(dataFile);
-        
-        if(amount.equals(0)){
-            if(directory.listFiles() == null){
-                amount = 1;
-            }else{
-                amount = directory.listFiles().length;
-            }
-        }
+
+        int amount = directory.listFiles() == null ? 1 : directory.listFiles().length;
+
         for(int i = 0; i < amount; i++){
             File file;
             if(directory.isDirectory()) {
@@ -81,10 +71,10 @@ public class DataLoaderCsv implements DataLoader {
                 logger.error(String.format("An IO error occurred while reading file %s", ticker));
             }
         }
-        
+
         return data;
     }
-    
+
     private StockList loadList(String ticker, String file) {
         StockList prices = new StockList(ticker);
         for(String[] value : readCsv(file)){
