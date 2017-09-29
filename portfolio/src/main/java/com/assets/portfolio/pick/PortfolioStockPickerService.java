@@ -1,7 +1,7 @@
 package com.assets.portfolio.pick;
 
-import com.assets.portfolio.Portfolio;
-import com.assets.portfolio.PortfolioService;
+import com.assets.portfolio.entities.Portfolio;
+import com.assets.portfolio.service.PortfolioService;
 import com.google.common.collect.Sets;
 
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
